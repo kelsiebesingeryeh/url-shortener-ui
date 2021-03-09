@@ -13,6 +13,8 @@ export class App extends Component {
   }
 
   componentDidMount() {
+    getUrls()
+    .then(urls => this.setState({urls}))
   }
 
   render() {

@@ -79,6 +79,9 @@ describe('Form', () => {
         cy
           .intercept("POST", "http://localhost:3001/api/v1/urls", {
             statusCode: 201,
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: {
               id: 105,
               title: "happy cow",

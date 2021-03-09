@@ -1,4 +1,4 @@
-describe.only("URL Shortener", () => {
+describe("URL Shortener", () => {
     beforeEach(() => {
         const baseURL = "http://localhost:3000/"
         cy.fixture("testURLData.json").then((urlData) => {
@@ -11,7 +11,7 @@ describe.only("URL Shortener", () => {
         cy.visit(baseURL)
     })
 
-    it.only("Should allow a user to see the homepage title and existing shortened URLS", () => {
+    it("Should allow a user to see the homepage title and existing shortened URLS", () => {
       cy.get("h1")
         .should("contain", "URL Shortener")
         .get(".url")
@@ -75,15 +75,6 @@ describe('Form', () => {
         cy.visit(baseURL)
     })
 
-    it ('should be able to fill out the form with inputs', () => {
-        cy.get("form input[name=title]")
-          .type("happy chickens")
-          .should("have.value", "happy chickens")
-          .get("form input[name=urlToShorten]")
-          .type("https://unsplash.com/photos/S9zGj88fgds")
-          .should("have.value", "https://unsplash.com/photos/S9zGj88fgds")
-    })
-
     it('should be able to add a new URl to the page after filling out the form', () => {
         cy
           .intercept("POST", "http://localhost:3001/api/v1/urls", {
@@ -105,11 +96,12 @@ describe('Form', () => {
           .click()
           .get(".url")
           .last()
-          .get("h3")
+          .children()
+          .first()
           .should("contain", "happy cow")
-          .get("a")
+          .next()
           .should("contain", "http://localhost:3001/useshorturl/105")
-          .get("p")
+          .next()
           .should("contain", "https://unsplash.com/photos/G_oWb_hcfx8")
     })
 })

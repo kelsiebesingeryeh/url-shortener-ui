@@ -17,15 +17,20 @@ class App extends Component {
     .then(urls => this.setState({urls: urls.urls}))
   }
 
+  addURL = (newURL) => {
+    this.setState({urls: [...this.state.urls, newURL]})
+  }
+
   render() {
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm 
+          addURL={this.addURL}/>
         </header>
 
-        <UrlContainer urls={this.state.urls}/>
+        <UrlContainer urls={this.state.urls} />
       </main>
     );
   }

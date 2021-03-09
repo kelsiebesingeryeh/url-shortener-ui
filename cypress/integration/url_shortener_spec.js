@@ -21,14 +21,46 @@ describe('URL Shortener', () => {
 describe('Form', () => {
     beforeEach(() => {
         const baseURL = "http://localhost:3000/"
-        cy.fixture("testURLData.json").then((reservationData) => {
+        cy.fixture("testURLData.json").then((urlData) => {
           cy.intercept(
             "GET",
-            "http://localhost:3001/api/v1/reservations",
-            reservationData
-          );
-        });
+            "http://localhost:3001/api/v1/urls",
+            urlData
+          )
+        })
         cy.visit(baseURL);
+    })
+
+    it ('should be able to fill out the form with inputs', () => {
+        cy.get("form input[name=title]")
+          .type("happy chickens")
+          .should("have.value", "happy chickens")
+          .get("form input[name=urlToShorten]")
+          .type("https://unsplash.com/photos/S9zGj88fgds")
+          .should("have.value", "https://unsplash.com/photos/S9zGj88fgds")
+    })
+
+    it('should be able to add a new URl to the page after filling out the form', () => {
+        cy.visit("http://localhost:3000")
+          .intercept("POST", "http://localhost:3001/api/v1/urls", {
+            statusCode: 201,
+            body: {
+              id: 105,
+              title: "happy cow",
+              long_url: "https://unsplash.com/photos/G_oWb_hcfx8",
+              short_url: "http://localhost:3001/useshorturl/105",
+            },
+          })
+          .get("form input[name=title]")
+          .type("happy cow")
+          .get("form input[name=urlToShorten]")
+          .type("https://unsplash.com/photos/G_oWb_hcfx8")
+          .get("button")
+          .click()
+          .get(".url")
+          .children()
+          .last()
+          .should("contain", "https://unsplash.com/photos/G_oWb_hcfx8");
     })
 })
 

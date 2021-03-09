@@ -12,7 +12,7 @@ export const createNewURL = (newURL) => {
     body: JSON.stringify(newURL)
   }
   return (
-    fetch("http://localhost:3001/api/v1/urls")
+    fetch("http://localhost:3001/api/v1/urls", options)
     .then(response => response.json())
   )
 }

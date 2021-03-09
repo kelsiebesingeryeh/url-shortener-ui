@@ -19,8 +19,6 @@ class App extends Component {
 
   addURL = async (newURL) => {
     const postedURL = await createNewURL(newURL)
-    // run post request- post returns something - returns an object with the short_url, id,
-    // store the whole object in state
     this.setState({ urls: [...this.state.urls, postedURL] });
   }
 

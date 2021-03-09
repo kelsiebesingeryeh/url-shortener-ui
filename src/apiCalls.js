@@ -16,5 +16,3 @@ export const createNewURL = (newURL) => {
     .then(response => response.json())
   )
 }
-
-// add the post request here

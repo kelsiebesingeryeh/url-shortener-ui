@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import './App.css';
-import { getUrls, createNewURL } from "../../apiCalls";
-import UrlContainer from '../UrlContainer/UrlContainer';
-import UrlForm from '../UrlForm/UrlForm';
+import React, { Component } from 'react'
+import './App.css'
+import { getUrls, createNewURL } from "../../apiCalls"
+import UrlContainer from '../UrlContainer/UrlContainer'
+import UrlForm from '../UrlForm/UrlForm'
 
 class App extends Component {
   constructor() {
@@ -30,10 +30,9 @@ class App extends Component {
           <UrlForm 
           addURL={this.addURL}/>
         </header>
-
         <UrlContainer urls={this.state.urls} />
       </main>
-    );
+    )
   }
 }
 

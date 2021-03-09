@@ -1,5 +1,5 @@
-import React from 'react';
-import './UrlContainer.css';
+import React from 'react'
+import './UrlContainer.css'
 
 const UrlContainer = ({urls}) => {
   const urlEls = urls.map(url => {
@@ -10,7 +10,7 @@ const UrlContainer = ({urls}) => {
         <p>{url.long_url}</p>
       </div>
     )
-  });
+  })
 
   return (
     <section>
@@ -19,4 +19,4 @@ const UrlContainer = ({urls}) => {
   )
 }
 
-export default UrlContainer;
+export default UrlContainer

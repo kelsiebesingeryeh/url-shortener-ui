@@ -1,22 +1,39 @@
-describe('URL Shortener', () => {
+describe("URL Shortener", () => {
     beforeEach(() => {
-        const baseURL = "http://localhost:3000/";
-        cy.visit(baseURL)
+      const baseURL = "http://localhost:3000/";
+      cy.visit(baseURL);
+    });
+
+    it("Should allow a user to see the homepage title and exisiting shortened URLS", () => {
+      cy.get("h1")
+        .should("contain", "URL Shortener")
+        .get(".url")
+        .should("be.visible")
+        .first()
+        .get("h3")
+        .should("contain", "Awesome photo")
+        .get("a")
+        .should("contain", "http://localhost:3001/useshorturl/1")
+        .get("p")
+        .should(
+          "contain",
+          "https://images.unsplash.com/photo-1531898418865-480b7090470f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"
+        )
     })
 
-    it('Should allow a user to visit the homepage', () => {
-        cy.get("h1")
-          .should("contain", "URL Shortener")
-          .get("form input[name=title]")
+    it('should allow a user to be able to view a form with the proper inputs', () => {
+        cy.get("form input[name=title]")
           .should("be.visible")
+          .type("happy goat")
+          .should("have.value", "happy goat")
           .get("form input[name=urlToShorten]")
           .should("be.visible")
+          .type("https://unsplash.com/photos/xB0e8bDV4ww")
+          .should("have.value", "https://unsplash.com/photos/xB0e8bDV4ww")
           .get("button")
           .should("contain", "Shorten Please!")
-          .get(".url").should('be.visible')
-          //add another test to test the actual existing shortened URL
     })
-})
+  })
 
 describe('Form', () => {
     beforeEach(() => {
@@ -28,7 +45,7 @@ describe('Form', () => {
             urlData
           )
         })
-        cy.visit(baseURL);
+        cy.visit(baseURL)
     })
 
     it ('should be able to fill out the form with inputs', () => {
@@ -41,7 +58,7 @@ describe('Form', () => {
     })
 
     it('should be able to add a new URl to the page after filling out the form', () => {
-        cy.visit("http://localhost:3000")
+        cy
           .intercept("POST", "http://localhost:3001/api/v1/urls", {
             statusCode: 201,
             body: {
@@ -53,20 +70,19 @@ describe('Form', () => {
           })
           .get("form input[name=title]")
           .type("happy cow")
+          .should("have.value", "happy cow")
           .get("form input[name=urlToShorten]")
           .type("https://unsplash.com/photos/G_oWb_hcfx8")
+          .should("have.value", "https://unsplash.com/photos/G_oWb_hcfx8")
           .get("button")
           .click()
           .get(".url")
-          .children()
           .last()
-          .should("contain", "https://unsplash.com/photos/G_oWb_hcfx8");
+          .get("h3")
+          .should("contain", "happy cow")
+          .get("a")
+          .should("contain", "http://localhost:3001/useshorturl/105")
+          .get("p")
+          .should("contain", "https://unsplash.com/photos/G_oWb_hcfx8")
     })
 })
-
-
-// When a user visits the page, they can view the page title and the existing shortened URLs
-// When a user visits the page, they can view the Form with the proper inputs
-// When a user fills out the form, the information is reflected in the input fields
-
-// When a user fills out and submits the form, the new shortened URL is rendered

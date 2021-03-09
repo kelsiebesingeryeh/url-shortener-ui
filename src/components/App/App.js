@@ -4,9 +4,9 @@ import { getUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
+class App extends Component {
+  constructor() {
+    super();
     this.state = {
       urls: []
     }
@@ -14,7 +14,7 @@ export class App extends Component {
 
   componentDidMount() {
     getUrls()
-    .then(urls => this.setState({urls}))
+    .then(urls => this.setState({urls: urls.urls}))
   }
 
   render() {
